@@ -1,8 +1,8 @@
 CC=gcc
-CFLAGS=-I.
+CFLAGS=-I. -g -Wall # show all warnings, preserve info for GDB
 
-process_fans: process_fans.o
-	$(CC) -o process_fans process_fans.o -I.
+proc_fan: proc_fan.o r_wait.o
+	$(CC) -o proc_fan proc_fan.o r_wait.o -I.
 
 clean:
-	rm *.o process_fans
+	rm *.o proc_fan
