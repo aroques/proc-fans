@@ -1,8 +1,15 @@
-CC=gcc
-CFLAGS=-I. -g -Wall # show all warnings, preserve info for GDB
+CC = gcc
+CFLAGS = -I. -g -Wall
 
-proc_fan: proc_fan.o r_wait.o
-	$(CC) -o proc_fan proc_fan.o r_wait.o -I.
+EXEC = runsim
+OBJS = runsim.o
+DEPS =
+
+%.o: %.c $(DEPS)
+	$(CC) -c -o $@ $< $(CFLAGS)
+
+all: $(OBJS)
+	gcc -o $(EXEC) $^ $(CFLAGS)
 
 clean:
-	rm *.o proc_fan
+	rm $(EXEC) $(OBJS)
