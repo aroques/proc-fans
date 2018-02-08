@@ -10,14 +10,14 @@
 
 const int MAX_CANON = 100;
 
+char** get_argv(char* str);
 
 int main (int argc, char *argv[]) {
     int proc_limit;         // Max number of concurrent children procceses
     int proc_count = 0;     // Number of concurrent children
-    char cmd[MAX_CANON];    // Commmand read from stdin
+    char cmd[MAX_CANON];    // Commmand (with arugents) read from stdin
     pid_t childpid = 0;     // Child process ID
-    char* substr;
-    char* arr[10];
+    char** argv;            // argv to pass to execv
 
 
     if (argc != 2) { /* check for valid number of command-line arguments */
@@ -35,41 +35,31 @@ int main (int argc, char *argv[]) {
             proc_count -= 1;
         }
 
-        fflush(stdin);
+        if ((childpid = fork()) == 0) {
+            // Child so...
+            // Execute a program coressponding to the first command line argument
+            strtok(cmd, "\n"); // remove \n's
 
-        if ((childpid = fork()) == 0) { // child so...
-            // Execute a program coressponding to that command line m
-            // makeargv execvp
-            strtok(cmd, "\n"); // extract token \n
+            argv = get_argv(cmd);
 
-            int i = 0;
-            substr = strtok(cmd, " ");
-            while (substr != NULL)
-            {
-                arr[i] = substr;
-                printf("%s \n", arr[i]);
-                substr = strtok(NULL, " ");
-                i++;
-            }
-            arr[i] = NULL;
-            printf("%s: is the program to execute\n", arr[0]);
-            execvp(arr[0], arr);
+            execvp(argv[0], argv);
             
             perror("Child failed to execvp the command");
             return 1;
         }
         
         if (childpid == -1) {
-            perror("Child failed to fork!\n\n");
+            perror("Child failed to fork!\n");
             return 1;
         }
         
         proc_count += 1; // increment because we forked
 
         if (waitpid(-1, NULL, WNOHANG) > 0) {
+            // A child has finished executing
             proc_count -= 1;
-            printf("A child finished. proc count = %d\n\n", proc_count);
         }
+
     }
     
     if (childpid > 0) {
@@ -77,5 +67,27 @@ int main (int argc, char *argv[]) {
     }
 
     return 0;
+
+}
+
+char** get_argv(char* str) {
+    // Returns an argv array
+
+    char* substr;
+    char** argv = malloc(10 * sizeof(char));
+
+    substr = strtok(str, " ");
+
+    int i = 0;
+    while (substr != NULL)
+    {
+        argv[i] = malloc(20 * sizeof(char));
+        argv[i] = substr;
+        substr = strtok(NULL, " ");
+        i++;
+    }
+    argv[i] = NULL; // Need NULL at end for execv
+
+    return argv;
 
 }
