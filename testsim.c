@@ -1,5 +1,5 @@
 /*
- * A program that creates a fan of n processes where n is passed as a command-line argument.
+ * A program that sleeps for sleep_factor seconds then prints it's pid repeat_factor times 
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,11 +8,11 @@
 int main (int argc, char *argv[]) {
 
     int i;
-    int repeat_factor; // Num times loop repeats
-    int sleep_time; //
+    int repeat_factor; 
+    int sleep_time;      
 
     if (argc != 3) { /* check for valid number of command-line arguments */
-        fprintf(stderr, "Usage: %s processes\n", argv[0]);
+        fprintf(stderr, "Usage: %s repeat_factor sleep_time NULL\n", argv[0]);
         return 1;
     }
     
