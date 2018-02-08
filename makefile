@@ -8,8 +8,13 @@ DEPS =
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-all: $(OBJS)
+all: runsim testsim
+
+runsim: $(OBJS)
 	gcc -o $(EXEC) $^ $(CFLAGS)
 
 clean:
-	rm $(EXEC) $(OBJS)
+	rm $(EXEC) $(OBJS) testsim testsim.o
+
+testsim: testsim.c
+	$(CC) -o testsim testsim.c

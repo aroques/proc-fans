@@ -8,7 +8,7 @@
 
 int main (int argc, char *argv[]) {
 
-    printf("hellow world!");
+    printf("hellow world!\n");
     // pid_t childpid = 0;
     // int i;
     // int repeat_factor; // Num times loop repeats
