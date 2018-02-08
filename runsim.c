@@ -1,5 +1,5 @@
 /*
- * A program that creates a fan of n processes where n is passed as a command-line argument.
+ * A program that reads commands (with arguments) from stdin and then forks and execs those commands
  */
 #include <stdio.h>
 #include <string.h>
