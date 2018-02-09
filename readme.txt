@@ -2,6 +2,14 @@ Project 1: Unix System Calls and Library Functions
 
 Exercise 3.9: Process Fans (p. 88) in Robbins/Robbins text
 
+Run this program with the following commands:
+
+    make
+    
+    ./runsim [n] < testing.data
+
+Run make clean to clean up
+
 Description of problems encountered:
 
 - Had trouble with gargled print output and with extra lines being read from stdin.
