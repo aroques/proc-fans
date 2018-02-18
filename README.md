@@ -1,4 +1,4 @@
-## Project 1: Unix System Calls and Library Functions
+## Unix System Calls and Library Functions
 
 ### Exercise 3.9: Process Fans (p. 88) in Robbins/Robbins text
 
